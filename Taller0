@@ -1,1 +1,78 @@
+package Taller0;
 
+import java.io.IOException;
+
+public class Taller0 {
+
+	public static void main(String [] args) throws IOException {
+		
+	}
+	
+	public static boolean leer() {
+		return false;
+	}
+	
+	public static boolean leerCliente() {
+		return false;
+	}
+	
+	public static boolean leerStatus() {
+		return false;
+	}
+	
+	public static boolean leerPeliculas() {
+		return false;
+	}
+	
+	public static boolean inicio() {
+		return false;
+	}
+	
+	public static void crearUsuario() {
+	}
+	
+	public static String decodificarRut() {
+		return "demo";
+	}
+	
+	public static int getUsuario() {
+		return 0;
+	}
+	
+	public static void cliente() {
+	}
+	
+	public static void compra() {
+	}
+	
+	public static void devolucion() {
+	}
+	
+	public static void cartelera() {
+	}
+	
+	public static void user() {
+	}
+	
+	public static void ADMIN() {
+	}
+	
+	public static void taquilla() {
+	}
+	
+	public static void info() {
+	}
+	
+	public static void guerdar() {
+	}
+	
+	public static void guerdarCliente() {
+	}
+	
+	public static void guerdarStatus() {
+	}
+	
+	public static void guerdarPeliculas() {
+	}
+	
+}
