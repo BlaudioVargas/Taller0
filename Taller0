@@ -5,11 +5,26 @@ import java.io.IOException;
 public class Taller0 {
 
 	public static void main(String [] args) throws IOException {
-		
+		boolean valido = leer();
+		if (valido){
+			boolean continuar = true;
+			while(continuar) {
+				continuar = inicio();
+			}
+			guardar();
+		}
+		System.out.println("SALIENDO DEL PROGRAMA, GRACIAS POR PREFERIRNOS");
 	}
 	
 	public static boolean leer() {
-		return false;
+		boolean valido = leerCliente();
+		if (valido) {
+			valido=leerStatus();
+			if(valido) {
+				valido=leerPeliculas();
+			}
+		}
+		return valido;
 	}
 	
 	public static boolean leerCliente() {
