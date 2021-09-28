@@ -3,8 +3,23 @@ package Taller0;
 import java.io.IOException;
 
 public class Taller0 {
-
+	public static int[][][][] sala;
+	public static String[][] usuario;
+	public static int totalusuario;
+	public static int[] saldo;
+	public static String[][] pelicula;
+	public static int[] recaudacion;
+	public static int totalmovies;
+	public static boolean[][][] horario;
+	
+	
 	public static void main(String [] args) throws IOException {
+		sala = new int[3][2][10][30];
+		usuario = new String[999][4];
+		saldo = new int[999];
+		pelicula = new String[99][2];
+		recaudacion = new int[99];
+		horario = new boolean[99][3][2];
 		boolean valido = leer();
 		if (valido){
 			boolean continuar = true;
