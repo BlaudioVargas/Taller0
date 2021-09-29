@@ -4,28 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Taller0 {
-	public static void guardarCliente (int numerousuario, String nombre, String apellido, String rut, String clave, String saldo) {
-		usuario[numerousuario][0]= nombre+","+ apellido;
-		usuario[numerousuario][1]= rut;
-		usuario[numerousuario][2]= clave;
-		usuario[numerousuario][3]= saldo;
-	}
-	
-	public static void guardarStatus(int numerostatus, String rut,String estado) {
-		
-		status[numerostatus][0] = rut;
-				
-		status[numerostatus][1]	= estado;
-		
-	}
-	
-	public static void guardarPeliculas(int numeropelicula, String nombrepelicula, String tipopelicula, String recaudacion, String funcion) {
-		pelicula[numeropelicula][0]= nombrepelicula;
-		pelicula[numeropelicula][1]= tipopelicula;
-		pelicula[numeropelicula][2]= recaudacion;
-		pelicula[numeropelicula][3]= funcion;
-		
-	}
+
 	public static int[][][][] sala;
 	public static String[][] usuario;
 	public static String[][] status;
@@ -248,6 +227,29 @@ public class Taller0 {
 	}
 	
 	public static void info() {
+	}
+	
+	public static void guardarCliente (int numerousuario, String nombre, String apellido, String rut, String clave, String saldo) {
+		usuario[numerousuario][0]= nombre+","+ apellido;
+		usuario[numerousuario][1]= rut;
+		usuario[numerousuario][2]= clave;
+		usuario[numerousuario][3]= saldo;
+	}
+	
+	public static void guardarStatus(int numerostatus, String rut,String estado) {
+		
+		status[numerostatus][0] = rut;
+				
+		status[numerostatus][1]	= estado;
+		
+	}
+	
+	public static void guardarPeliculas(int numeropelicula, String nombrepelicula, String tipopelicula, String recaudacion, String funcion) {
+		pelicula[numeropelicula][0]= nombrepelicula;
+		pelicula[numeropelicula][1]= tipopelicula;
+		pelicula[numeropelicula][2]= recaudacion;
+		pelicula[numeropelicula][3]= funcion;
+		
 	}
 
 }
