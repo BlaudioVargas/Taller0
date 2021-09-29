@@ -1,10 +1,34 @@
 package Taller0;
 
 import java.io.IOException;
+import java.util.*;
 
 public class Taller0 {
+	public static void guardarCliente (int numerousuario, String nombre, String apellido, String rut, String clave, String saldo) {
+		usuario[numerousuario][0]= nombre+","+ apellido;
+		usuario[numerousuario][1]= rut;
+		usuario[numerousuario][2]= clave;
+		usuario[numerousuario][3]= saldo;
+	}
+	
+	public static void guardarStatus(int numerostatus, String rut,String estado) {
+		
+		status[numerostatus][0] = rut;
+				
+		status[numerostatus][1]	= estado;
+		
+	}
+	
+	public static void guardarPeliculas(int numeropelicula, String nombrepelicula, String tipopelicula, String recaudacion, String funcion) {
+		pelicula[numeropelicula][0]= nombrepelicula;
+		pelicula[numeropelicula][1]= tipopelicula;
+		pelicula[numeropelicula][2]= recaudacion;
+		pelicula[numeropelicula][3]= funcion;
+		
+	}
 	public static int[][][][] sala;
 	public static String[][] usuario;
+	public static String[][] status;
 	public static int totalusuario;
 	public static int[] saldo;
 	public static String[][] pelicula;
@@ -16,8 +40,13 @@ public class Taller0 {
 	public static void main(String [] args) throws IOException {
 		sala = new int[3][2][10][30];
 		usuario = new String[999][4];
+		int numerousuario= 0;
+		status = new String [999][2];
+		int numerostatus = 0;
 		saldo = new int[999];
-		pelicula = new String[99][2];
+		//pelicula = new String[99][2];
+		pelicula = new String[99][4];
+		int numeropelicula =0;
 		recaudacion = new int[99];
 		horario = new boolean[99][3][2];
 		boolean valido = leer();
@@ -26,8 +55,90 @@ public class Taller0 {
 			while(continuar) {
 				continuar = inicio();
 			}
-			guardar();
+			//guardar();
+			
+			
 		}
+		String op= "0";
+		 String nombre;
+		 String apellido;
+		 String rut;
+		 String clave;
+		 String saldo;
+		 int estado;
+		 String nombrepelicula;
+		 int tipopelicula;
+		 String recaudacion;
+		 String funcion;
+		
+		Scanner leer = new Scanner(System.in);
+		do {
+			System.out.println("""
+					opciones
+					1-guardar cliente
+					2-guardar Status
+					3-guardar películas
+					""");
+			op = leer.nextLine().toString();
+			System.out.println("opciones"+ op);
+			
+			if (op.equals("1")) {
+				
+				System.out.println("Digite su nombre: ");
+				nombre= leer.nextLine();
+				
+				System.out.print("Digite su Apellido: ");
+				apellido= leer.nextLine();
+				
+				System.out.print("Digite su rut: ");
+				rut= leer.nextLine();
+				
+				System.out.print("Digite su clave: ");
+				clave= leer.nextLine();
+				
+				System.out.print("Digite su saldo: ");
+				saldo= leer.nextLine();
+				
+				guardarCliente(numerousuario, nombre ,apellido ,rut,clave, saldo);
+				numerousuario++;
+				
+			}
+			if (op.equals("2")) {
+				
+				System.out.println("Digite su rut: ");
+				rut= leer.nextLine();
+				
+				System.out.print("Digite su estado: (1- Habilitado / 2- No habilitado");
+				estado= Integer.parseInt(leer.nextLine().toString());
+				
+				String nombreestado =(estado==1)?"habilitado": "no habilitado";
+				guardarStatus(numerostatus, rut,nombreestado);
+				numerostatus++;
+			}
+			
+			if(op.equals("3")) {
+				
+				System.out.println("Nombre de la película: ");
+				nombrepelicula= leer.nextLine();
+				
+				System.out.println("tipo de la película: (1- Estreno / 2- Liberada");
+				tipopelicula= Integer.parseInt(leer.nextLine().toString());
+				
+				System.out.println("Recaudacion: ");
+				recaudacion= leer.nextLine();
+				
+				System.out.println("Sala y horario: ");
+				funcion= leer.nextLine();
+				
+				String nombretipopelicula =(tipopelicula==1)?"Estreno": "Liberada";
+				guardarPeliculas (numeropelicula, nombrepelicula,nombretipopelicula, recaudacion, funcion);
+				numeropelicula++;
+				
+			}
+				
+		}while(op!="4");
+		
+		
 		System.out.println("SALIENDO DEL PROGRAMA, GRACIAS POR PREFERIRNOS");
 	}
 	
@@ -138,17 +249,5 @@ public class Taller0 {
 	
 	public static void info() {
 	}
-	
-	public static void guerdar() {
-	}
-	
-	public static void guerdarCliente() {
-	}
-	
-	public static void guerdarStatus() {
-	}
-	
-	public static void guerdarPeliculas() {
-	}
-	
+
 }
