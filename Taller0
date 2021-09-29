@@ -159,7 +159,66 @@ public class Taller0 {
 	}
 	
 	public static boolean inicio() {
-		return false;
+		@SuppressWarnings("resource")
+		var sc= new Scanner(System.in);
+		System.out.println("INICIO DE SECION");
+		System.out.println("Escriba su Rut");
+		System.out.println("Se finaliza con 0:");
+		String seleccion = sc.nextLine();
+		int direccion = getUsuario(decodificarRut(seleccion));
+		if((seleccion).equals("0"))
+		{
+			System.out.println("Se a finalizado la operacion");
+			return false;
+		}
+		else if (seleccion.equals("ADMIN"))
+		{
+			System.out.println("Escriba su contraseña");
+			String password = sc.nextLine();
+			if((password).equals("ADMIN"))
+			{
+				ADMIN();
+			}
+			else
+			{
+				System.out.println("ERROR-Contraseña invalida");
+			}
+		}
+		else if(direccion>=0)
+		{
+			
+			System.out.println("Escriba su contraseña");
+			String password = sc.nextLine();
+			if((usuario[direccion][4].equals(password))
+			{
+				cliente(direccion);
+			}
+			else
+			{
+				System.out.println("ERROR-Contraseña invalida");
+			}
+		}
+		else
+		{
+			System.out.println("Usuario no existe");
+			System.out.println("Desea crar un nuevo Usuario");
+			System.out.println("Y/N");
+			String clave =sc.nextLine();
+			if((clave).equals("y")||(clave).equals("Y"))
+			{
+				crearUsuario(seleccion);
+			}
+			else if((clave).equals("n")||(clave).equals("N"))
+			{
+				/// NO SE HACE NADA
+			}
+			else
+			{
+				System.out.println("ERROR COMANDO NO RECONOCIDO");
+			}
+			System.out.println("Volviendo al principio de la operacion");
+		}
+	return true;
 	}
 	
 	public static void crearUsuario(String rut) {
