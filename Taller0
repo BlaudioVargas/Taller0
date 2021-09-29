@@ -18,14 +18,14 @@ public class Taller0 {
 	
 	public static void main(String [] args) throws IOException {
 		sala = new int[3][2][10][30];
-		usuario = new String[999][4];
-		int numerousuario= 0;
+		usuario = new String[999][5];
+		totalusuario= 0;
 		status = new String [999][2];
-		int numerostatus = 0;
+		//int numerostatus = 0; no es necesario ya que es el mismo de totalusuario
 		saldo = new int[999];
-		//pelicula = new String[99][2];
-		pelicula = new String[99][4];
-		int numeropelicula =0;
+		pelicula = new String[99][2];
+		//pelicula = new String[99][4];
+		totalmovies =0;
 		recaudacion = new int[99];
 		horario = new boolean[99][3][2];
 		boolean valido = leer();
@@ -133,22 +133,99 @@ public class Taller0 {
 	}
 	
 	public static boolean leerCliente() {
-		return false;
+		try {
+			File archivo = new File ("clientes.txt"); 
+			FileReader text = new FileReader (archivo); 
+			BufferedReader reader = new BufferedReader(text); 
+			String linea;
+			String[] partes;
+			int contador=0;
+			while((linea = reader.readLine())!=null && contador <999){
+				partes = linea.split(",");
+				usuario[contador][0]=partes[0];
+				usuario[contador][1]=partes[1];
+				usuario[contador][2]=partes[2];
+				usuario[contador][3]=partes[3];
+				saldo[contador]=Integer.parseInt(partes[4]);
+				contador++;
+			 }
+			 reader.close();
+			 totalusuario= contador;
+			 return true;
+		}
+		catch (Exception e) {
+			System.out.println("ARCHIVO DE CLIENTES CORRUPTO/INEXISTENTE");
+			return false;
+		}
 	}
 	
 	public static boolean leerStatus() {
-		return false;
+		try {
+			File archivo = new File ("clientes.txt"); 
+			FileReader text = new FileReader (archivo); 
+			BufferedReader reader = new BufferedReader(text); 
+			String linea;
+			String[] partes;
+			while((linea = reader.readLine())!=null){
+				partes = linea.split(",");
+				int direccion = getUsuario(partes[0]);
+				if (direccion>=0) {
+					usuario[direccion][4]=partes[1];
+				}
+			 }
+			 reader.close();
+			 return true;
+		}
+		catch (Exception e) {
+			System.out.println("ARCHIVO DE STATUS CORRUPTO/INEXISTENTE");
+			return false;
+		}
 	}
 	
 	public static boolean leerPeliculas() {
-		return false;
+		try {
+			File archivo = new File ("peliculas.txt"); 
+			FileReader text = new FileReader (archivo); 
+			BufferedReader reader = new BufferedReader(text); 
+			String linea;
+			String[] partes;
+			int contador=0;
+			while((linea = reader.readLine())!=null && contador <99){
+				partes = linea.split(",");
+				pelicula[contador][0]=partes[0];
+				pelicula[contador][1]=partes[1];
+				recaudacion[contador]=Integer.parseInt(partes[2]);
+				int tamano = partes.length;
+				for(int i=3;i<tamano;i+=2) {
+					int coordenadas =0;
+					if(partes[i+1].equals("T") || partes[i+1].equals("t")) {
+						coordenadas=1;
+					}
+					horario[contador][Integer.parseInt(partes[i])][coordenadas]=true;
+				}
+				
+				
+				int direccion = getUsuario(partes[0]);
+				if (direccion>=0) {
+					usuario[direccion][4]=partes[1];
+				}
+				contador++;
+			 }
+			totalmovies=contador;
+			 reader.close();
+			 return true;
+		}
+		catch (Exception e) {
+			System.out.println("ARCHIVO DE STATUS CORRUPTO/INEXISTENTE");
+			return false;
+		}
 	}
 	
 	public static boolean inicio() {
 		return false;
 	}
 	
-	public static void crearUsuario() {
+	public static void crearUsuario(String rut) {
 	}
 	
 	public static String decodificarRut(String rut) {
@@ -201,7 +278,7 @@ public class Taller0 {
 		}
 	}
 	
-	public static int getUsuario() {
+	public static int getUsuario(String rut) {
 		return 0;
 	}
 	
