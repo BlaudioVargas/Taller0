@@ -330,7 +330,46 @@ public class Taller0 {
 	public static void cartelera() {
 	}
 	
-	public static void user() {
+	public static void user(int direccion) {
+		try {
+			@SuppressWarnings("resource")
+			var sc= new Scanner(System.in);
+			System.out.println("Nombre :"+usuario[direccion][0]);
+			System.out.println("Apellido :"+usuario[direccion][1]);
+			System.out.println("Rut :"+usuario[direccion][2]);
+			System.out.println("Saldo :"+saldo[direccion]);
+			//public static int[][][][] sala  = new int[3][2][10][30];
+			//horario = new boolean[99][3][2];
+			//pelicula = new String[99][2];
+			int contador=1;
+			for (int a =0;a<3;a++) {
+				for (int b =0;b<2;b++) {
+					for (int c =0;c<10;c++) {
+						for (int d =0;d<30;d++) {
+							if(sala[a][b][c][d]==direccion) {
+								String Horario ="Mañana";
+								if(b==1) {
+									Horario="Tarde";
+								}
+								int movie=-1;
+								for(int y=0;y<totalmovies;y++) {
+									if(horario[y][a][b]==true) {
+										movie=y;
+										break;
+									}
+								}
+								String alfabeto="ABCDEFGHIJ";
+								String[] partes = alfabeto.split("");
+								System.out.println(contador+")"+pelicula[movie]+" - Sala:"+(a+1)+" - Horario de la "+Horario+" - En el Asiento "+partes[c]+d);
+							}
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			System.out.println("ERROR USUARIO NO VALIDO PARA LECTURA");
+		}
 	}
 	
 	public static void ADMIN() {
@@ -340,6 +379,18 @@ public class Taller0 {
 	}
 	
 	public static void info() {
+		@SuppressWarnings("resource")
+		var sc= new Scanner(System.in);
+		System.out.print("RUT:");
+		String rut = sc.nextLine();
+		System.out.println();
+		int direccion = getUsuario(rut);
+		if (direccion >=0) {
+			user(direccion);
+		}
+		else {
+			System.out.println("ERROR EL RUT DEL USUARIO NO APARECE EN LA BASE DE DATOS");
+		}
 	}
 	
 	public static void guardarCliente (int numerousuario, String nombre, String apellido, String rut, String clave, String saldo) {
