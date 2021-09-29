@@ -226,6 +226,33 @@ public class Taller0 {
 	}
 	
 	public static void crearUsuario(String rut) {
+		try {
+			@SuppressWarnings("resource")
+			var sc= new Scanner(System.in);
+			System.out.println("Crear nuevo usuario RUT:"+rut);
+			System.out.print("-)NOMBRE:");
+			String name = sc.nextLine();
+			System.out.println();
+			System.out.print("-)Apellido:");
+			String lName = sc.nextLine();
+			System.out.println();
+			System.out.print("-)Clave:");
+			String password = sc.nextLine();
+			System.out.println();
+			System.out.print("-)Saldo:");
+			int fondos = sc.nextInt();
+			System.out.println();
+			usuario[totalusuario][0]=name;
+			usuario[totalusuario][1]=lName;
+			usuario[totalusuario][2]=rut;
+			usuario[totalusuario][3]=password;
+			saldo[totalusuario]=fondos;
+			totalusuario++;
+			System.out.println("El usuario "+name+" "+lName+" fue creado con exito");
+		}
+		catch (Exception e) {
+			System.out.println("ARCHIVO DE NUEVO USUARIO INVALIDO");
+		}
 	}
 	
 	public static String decodificarRut(String rut) {
