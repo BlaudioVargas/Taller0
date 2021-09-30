@@ -314,7 +314,7 @@ public class Taller0 {
 		return direccion;
 	}
 	
-	public static void cliente() {
+	public static void cliente(int direccion) {
 	}
 	
 	public static void compra() {
@@ -387,6 +387,12 @@ public class Taller0 {
 		else {
 			System.out.println("ERROR EL RUT DEL USUARIO NO APARECE EN LA BASE DE DATOS");
 		}
+	}
+	
+	public static void guardar() {
+		guardarCliente();
+		guardarStatus();
+		guardarPeliculas();
 	}
 	
 	public static void guardarCliente() {
