@@ -5,15 +5,15 @@ import java.util.*;
 
 public class Taller0 {
 
-	public static int[][][][] sala;
-	public static String[][] usuario;
-	public static String[][] status;
-	public static int totalusuario;
-	public static int[] saldo;
-	public static String[][] pelicula;
-	public static int[] recaudacion;
-	public static int totalmovies;
-	public static boolean[][][] horario;
+	public static int[][][][] sala;//@param The data of each seat of the 3 rooms is saved in its two schedules
+	public static String[][] usuario;//@param All users' data is saved
+	public static String[][] status;//@param The states of all users are saved
+	public static int totalusuario;//@param total of users in the system
+	public static int[] saldo;//@param User balances are saved
+	public static String[][] pelicula;//@param Movie related data is saved
+	public static int[] recaudacion;//@param earnings for each movie
+	public static int totalmovies;//@param total of moviens in the system
+	public static boolean[][][] horario;//@param if the movies have a show in the room at certain times
 	
 	
 	public static void main(String [] args) throws IOException {
@@ -37,7 +37,7 @@ public class Taller0 {
 		System.out.println("SALIENDO DEL PROGRAMA, GRACIAS POR PREFERIRNOS");
 	}
 	
-	public static boolean leer() {
+	public static boolean leer() {//@return if it was possible to load all the data, it returns TRUE
 		for(int a =0;a<3;a++) {
 			for(int b =0;a<3;a++) {
 				for(int c =0;a<3;a++) {
@@ -69,7 +69,7 @@ public class Taller0 {
 		return valido;
 	}
 	
-	public static boolean leerCliente() {
+	public static boolean leerCliente() {//@return if it was possible to load "clientes.txt", it returns TRUE
 		try {
 			File archivo = new File ("clientes.txt"); 
 			FileReader text = new FileReader (archivo); 
@@ -96,9 +96,9 @@ public class Taller0 {
 		}
 	}
 	
-	public static boolean leerStatus() {
+	public static boolean leerStatus() {//@return if it was possible to load "status.txt", it returns TRUE
 		try {
-			File archivo = new File ("clientes.txt"); 
+			File archivo = new File ("status.txt"); 
 			FileReader text = new FileReader (archivo); 
 			BufferedReader reader = new BufferedReader(text); 
 			String linea;
@@ -119,7 +119,7 @@ public class Taller0 {
 		}
 	}
 	
-	public static boolean leerPeliculas() {
+	public static boolean leerPeliculas() {//@return if it was possible to load "peliculas.txt", it returns TRUE
 		try {
 			File archivo = new File ("peliculas.txt"); 
 			FileReader text = new FileReader (archivo); 
@@ -158,7 +158,7 @@ public class Taller0 {
 		}
 	}
 	
-	public static boolean inicio() {
+	public static boolean inicio() {//@return returns TRUE if the user wnats to continue to use the program
 		@SuppressWarnings("resource")
 		var sc= new Scanner(System.in);
 		System.out.println("INICIO DE SECION");
@@ -189,7 +189,7 @@ public class Taller0 {
 			
 			System.out.println("Escriba su contraseña");
 			String password = sc.nextLine();
-			if((usuario[direccion][4].equals(password))
+			if((usuario[direccion][4].equals(password)))
 			{
 				cliente(direccion);
 			}
@@ -251,7 +251,7 @@ public class Taller0 {
 		}
 	}
 	
-	public static String decodificarRut(String rut) {
+	public static String decodificarRut(String rut) {//@return a simplified version of the rut
 		String[] partes;
 		partes = rut.split("");
 		if(partes.length==12)
@@ -301,7 +301,7 @@ public class Taller0 {
 		}
 	}
 	
-	public static int getUsuario(String rut) {
+	public static int getUsuario(String rut) {//@return the direction of the wanted user
 		int direccion =-1;
 		String rutA = decodificarRut(rut);
 		for (int i =0; i<totalusuario;i++) {
@@ -328,8 +328,6 @@ public class Taller0 {
 	
 	public static void user(int direccion) {
 		try {
-			@SuppressWarnings("resource")
-			var sc= new Scanner(System.in);
 			System.out.println("Nombre :"+usuario[direccion][0]);
 			System.out.println("Apellido :"+usuario[direccion][1]);
 			System.out.println("Rut :"+usuario[direccion][2]);
