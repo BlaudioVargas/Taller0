@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Taller0 {
 
-	public static int[][][][] sala;//@param The data of each seat of the 3 rooms is saved in its two schedules
+	public static int[][][][][] sala;//@param The data of each seat of the 3 rooms is saved in its two schedules
 	public static String[][] usuario;//@param All users' data is saved
 	public static String[][] status;//@param The states of all users are saved
 	public static int totalusuario;//@param total of users in the system
@@ -28,7 +28,7 @@ public class Taller0 {
 	
 	
 	public static void main(String [] args) throws IOException {
-		sala = new int[3][2][10][30];
+		sala = new int[99][3][2][10][30];
 		usuario = new String[999][5];
 		totalusuario=0;
 		saldo = new int[999];
@@ -49,15 +49,17 @@ public class Taller0 {
 	}
 	
 	public static boolean leer() {//@return if it was possible to load all the data, it returns TRUE
-		for(int a =0;a<3;a++) {
-			for(int b =0;a<3;a++) {
-				for(int c =0;a<3;a++) {
-					for(int d =0;a<3;a++) {
-						if(c<4 && (d<5 || d>24)) {
-							sala[a][b][c][d]=-2;
-						}
-						else {
-							sala[a][b][c][d]=-1;
+		for(int x =0;x<99;x++) {
+			for(int a =0;a<3;a++) {
+				for(int b =0;a<3;a++) {
+					for(int c =0;a<3;a++) {
+						for(int d =0;a<3;a++) {
+							if(c<4 && (d<5 || d>24)) {
+								sala[x][a][b][c][d]=-2;
+							}
+							else {
+								sala[x][a][b][c][d]=-1;
+							}
 						}
 					}
 				}
@@ -151,12 +153,6 @@ public class Taller0 {
 					}
 					horario[contador][Integer.parseInt(partes[i])][coordenadas]=true;
 				}
-				
-				
-				int direccion = getUsuario(partes[0]);
-				if (direccion>=0) {
-					usuario[direccion][4]=partes[1];
-				}
 				contador++;
 			 }
 			totalmovies=contador;
@@ -197,7 +193,6 @@ public class Taller0 {
 		}
 		else if(direccion>=0)
 		{
-			
 			System.out.println("Escriba su contraseña");
 			String password = sc.nextLine();
 			if((usuario[direccion][4].equals(password)))
@@ -209,13 +204,13 @@ public class Taller0 {
 				System.out.println("ERROR-Contraseña invalida");
 			}
 		}
-		else
+		else if(totalusuario<999)
 		{
 			System.out.println("Usuario no existe");
 			System.out.println("Desea crar un nuevo Usuario");
 			System.out.println("Y/N");
 			String clave =sc.nextLine();
-			if((clave).equals("y")||(clave).equals("Y"))
+			if(((clave).equals("y")||(clave).equals("Y")))
 			{
 				crearUsuario(seleccion);
 			}
@@ -228,6 +223,9 @@ public class Taller0 {
 				System.out.println("ERROR COMANDO NO RECONOCIDO");
 			}
 			System.out.println("Volviendo al principio de la operacion");
+		}
+		else {
+			System.out.println("ERROR NO EXITE USUARIO / LIMITE DE USUARIO EN EL SISTEMA ALCANZADO");
 		}
 	return true;
 	}
@@ -326,15 +324,296 @@ public class Taller0 {
 	}
 	
 	public static void cliente(int direccion) {
+		boolean valido = true;
+		while(valido) {
+			@SuppressWarnings("resource")
+			var sc= new Scanner(System.in);
+			System.out.println("Cliente "+ usuario[direccion][3]);
+			System.out.println("1)Comprar entrada");
+			System.out.println("2)Informacion usuario");
+			System.out.println("3)Devolucion entrada");
+			System.out.println("4)Cartelera");
+			System.out.println("0)Salir");
+			String respuesta = sc.nextLine();
+			if(respuesta.equals("1")) {
+				compra(direccion);
+			}
+			else if(respuesta.equals("2")) {
+				user(direccion);		
+			}
+			else if(respuesta.equals("3")) {
+				devolucion(direccion);
+			}
+			else if(respuesta.equals("4")) {
+				cartelera(direccion);
+			}
+			else if(respuesta.equals("0")) {
+				valido = false;
+				System.out.println("Saliendo de menu usario");
+			}
+			else {
+				System.out.println("ERROR RESPUESTA NO VALIDA");
+			}
+		}
 	}
 	
-	public static void compra() {
+	public static void compra(int direccion) {
+		@SuppressWarnings("resource")
+		var sc= new Scanner(System.in);
+		System.out.println("COMPRAR ENTREADA DE PELICULA");
+		System.out.print("Nombre de pelicula: ");
+		String respuesta = sc.nextLine();
+		System.out.println();
+		int movie=-1;
+		for(int a=0;a<totalmovies;a++) {
+			if(respuesta.equals(pelicula[a][0])) {
+				movie=a;
+				break;
+			}
+		}
+		if(movie<=0) {
+			for(int a=0;a<3;a++) {
+				for(int b=0;b<2;b++) {
+					if(horario[movie][a][b]) {
+						String abc = "MT";
+						String[] partes = abc.split("");
+						System.out.println("Funcion en sala "+a+" horario "+partes[b]);
+					}
+				}
+			}
+			System.out.print("Seleccione su sala: ");
+			String salon = sc.nextLine();
+			System.out.println();
+			System.out.print("Seleccione su horario: ");
+			String hora = sc.nextLine();
+			System.out.println();
+			try {
+				int a = Integer.parseInt(salon);
+				int b =-1;
+				if(hora.equals("m")||hora.equals("M")){
+					b=0;
+				}
+				else if(hora.equals("t")||hora.equals("T")){
+					b=1;
+				}
+				if(horario[movie][a][b]) {
+					for(int y=0;y<10;y++) {
+						System.out.print("|");
+						for(int x=0;x<30;x++) {
+							System.out.print(sala[movie][a][b][y][x]+"|");
+						}
+						System.out.println();
+					}
+					System.out.print("Porfavor indique la cantidad de asientos que desea comprar");
+					int totalcompra = sc.nextInt();
+					int contador=0;
+					System.out.println();
+					int costo =0;
+					if(pelicula[movie][1].equals("estreno")) {
+						costo=5500*totalcompra;
+					}
+					else {
+						costo=4000*totalcompra;
+					}
+					if(usuario[direccion][4].equals("HABILITADO")) {
+						costo=(int) (costo*0.85);
+					}
+					boolean posible =true;
+					boolean continuar=true;
+					while(continuar) {
+						if(costo>saldo[direccion]) {
+							System.out.println("Saldo insuficiente, Desea agregar mas saldo (Y/N)");
+							respuesta = sc.nextLine();
+							if(respuesta.equals("Y")||respuesta.equals("Y")) {
+								System.out.print("Porfavor indique la cantidad de saldo a agregar");
+								int nuevoSaldo = sc.nextInt();
+								System.out.println();
+								saldo[direccion]+=nuevoSaldo;
+							}
+							else if(respuesta.equals("N")||respuesta.equals("n")){
+								posible = false;
+								continuar=false;
+							}
+							
+						}
+						else {
+							saldo[direccion]-=costo;
+							recaudacion[movie]+=costo;
+							continuar=false;
+						}
+					}
+					while(contador<totalcompra && posible) {
+						System.out.print("Porfavor indique la coordenada X del asiento");
+						int asientoX = sc.nextInt();
+						System.out.println();
+						System.out.print("Porfavor indique la coordenada Y del asiento");
+						int asientoY = sc.nextInt();
+						System.out.println();
+						if(sala[movie][a][b][asientoY][asientoX]==-1) {
+							boolean funciono =false;
+							if(asientoX>0 || asientoX<29) {
+								if((sala[movie][a][b][asientoY][asientoX-1]==-1)&&(sala[movie][a][b][asientoY][asientoX+1]==-1)) {
+									sala[movie][a][b][asientoY][asientoX]=direccion;
+									funciono=true;
+									contador++;
+								}
+							}
+							else if (asientoX==0){
+								if(sala[movie][a][b][asientoY][asientoX+1]==-1) {
+									sala[movie][a][b][asientoY][asientoX]=direccion;
+									funciono=true;
+									contador++;
+								}
+							}
+							else if (asientoX==29){
+								if(sala[movie][a][b][asientoY][asientoX-1]==-1) {
+									sala[movie][a][b][asientoY][asientoX]=direccion;
+									funciono=true;
+									contador++;
+								}
+							}
+							if(funciono) {
+								System.out.println("El asiento se compro con exito");
+							}
+							else {
+								System.out.println("ERROR ASIENTO NO CUMPLE CON REGULACION COVID");
+							}
+							
+						}
+						else {
+							System.out.println("ERROR ASIENTO YA TIENE DUEÑO");
+						}
+					}
+				}
+				else{
+					System.out.println("SALA/HORARIO NO VALIDO");
+				}
+			}
+			catch (Exception e) {
+				System.out.println("ERROR");
+			}
+		}
+		else {
+			System.out.println("ERROR NO EXISTE PELICULA");
+		}
 	}
 	
-	public static void devolucion() {
+	public static void devolucion(int direccion) {
+		@SuppressWarnings("resource")
+		var sc= new Scanner(System.in);
+		System.out.println("DEVOLUCION");
+		int contador=0;
+		int[] listado = new int[99];
+		int totalListado=0;
+		for (int x =0;x<3;x++) {
+			for (int a =0;a<3;a++) {
+				for (int b =0;b<2;b++) {
+					for (int c =0;c<10;c++) {
+						for (int d =0;d<30;d++) {
+							if(sala[x][a][b][c][d]==direccion) {
+								String Horario ="Mañana";
+								if(b==1) {
+									Horario="Tarde";
+								}
+								String alfabeto="ABCDEFGHIJ";
+								String[] partes = alfabeto.split("");
+								System.out.println(contador+")"+pelicula[x][0]+" - Sala:"+(a+1)+" - Horario de la "+Horario+" - En el Asiento "+partes[c]+d);
+								contador++;
+								listado[totalListado]=x;
+								totalListado++;
+							}
+						}
+					}
+				}
+			}
+		}
+		System.out.print("Nombre de pelicula: ");
+		String respuesta = sc.nextLine();
+		System.out.println();
+		for(int i=0;i<totalListado;i++) {
+			if(respuesta.equals(pelicula[listado[i]][0])) {
+				System.out.print("Indique la sala");
+				int numerosala = sc.nextInt();
+				System.out.println();
+				System.out.print("Indique el horario(M/T)");
+				String horariosala = sc.nextLine();
+				System.out.println();
+				int salahorario=-1;
+				if(horariosala.equals("M")||horariosala.equals("m")) {
+					salahorario=0;
+				}
+				else if(horariosala.equals("T")||horariosala.equals("t")){
+					salahorario=1;
+				}
+				if(salahorario>=0) {
+					if(horario[listado[i]][numerosala][salahorario]) {
+						int totalasientos=0;
+						for (int c =0;c<10;c++) {
+							for (int d =0;d<30;d++) {
+								if(sala[listado[i]][numerosala][salahorario][c][d]==direccion) {
+									totalasientos++;
+								}
+							}
+						}
+						System.out.println("Porfavor indique la cantidad de asientos que desea reembolsar");
+						int totalasientosreembolso = sc.nextInt();
+						System.out.println();
+						if(totalasientosreembolso>totalasientos) {
+							totalasientosreembolso=totalasientos;
+							System.out.println("La cantidad de asientos que deseea reembolzar son mas de la cantidad que tiene");
+							System.out.println("por lo que se cambio a su maximo de asientos en esta sala que es de :"+totalasientos+" asientos");
+						}
+						int costo =0;
+						if(pelicula[listado[i]][1].equals("estreno")) {
+							costo=5500*totalasientosreembolso;
+						}
+						else {
+							costo=4000*totalasientosreembolso;
+						}
+						if(usuario[direccion][4].equals("HABILITADO")) {
+							costo=(int) (costo*0.85);
+						}
+						costo=(int) (costo*0.8);
+						for (int c =0;c<10;c++) {
+							for (int d =0;d<30;d++) {
+								if(sala[listado[i]][numerosala][salahorario][c][d]==direccion && totalasientosreembolso>0) {
+									sala[listado[i]][numerosala][salahorario][c][d]=-1;
+									totalasientosreembolso--;
+								}
+							}
+						}
+						saldo[direccion]+=costo;
+						recaudacion[listado[i]]-=costo;
+						System.out.println("Se reembolsaron todas las entradas con exito");
+					}
+					else {
+						System.out.println("ERROR PELICULA NO ADMINITDA PARA DEVOLUCION");
+					}
+				}
+				
+				
+			}
+			else {
+				System.out.print("ERROR PELICULA NO ADMINITDA PARA DEVOLUCION");
+			}
+		}
 	}
 	
-	public static void cartelera() {
+	public static void cartelera(int direccion) {
+		System.out.print("CARTELERA");
+		for(int a=0;a<99;a++) {
+			System.out.println("-"+pelicula[a][0]);
+			for(int b=0;b<3;b++) {
+				System.out.println("-- Sala "+b);
+				for(int c=0;c<3;c++) {
+					if(horario[a][b][c]) {
+						String abc = "MT";
+						String[] partes = abc.split("");
+						System.out.println("--- Horario "+partes[b]);
+					}
+				}
+			}
+		}
 	}
 	
 	public static void user(int direccion) {
@@ -343,34 +622,35 @@ public class Taller0 {
 			System.out.println("Apellido :"+usuario[direccion][1]);
 			System.out.println("Rut :"+usuario[direccion][2]);
 			System.out.println("Saldo :"+saldo[direccion]);
-			//public static int[][][][] sala  = new int[3][2][10][30];
-			//horario = new boolean[99][3][2];
-			//pelicula = new String[99][2];
 			int contador=1;
-			for (int a =0;a<3;a++) {
-				for (int b =0;b<2;b++) {
-					for (int c =0;c<10;c++) {
-						for (int d =0;d<30;d++) {
-							if(sala[a][b][c][d]==direccion) {
-								String Horario ="Mañana";
-								if(b==1) {
-									Horario="Tarde";
-								}
-								int movie=-1;
-								for(int y=0;y<totalmovies;y++) {
-									if(horario[y][a][b]==true) {
-										movie=y;
-										break;
+			for (int x =0;x<3;x++) {
+				for (int a =0;a<3;a++) {
+					for (int b =0;b<2;b++) {
+						for (int c =0;c<10;c++) {
+							for (int d =0;d<30;d++) {
+								if(sala[x][a][b][c][d]==direccion) {
+									String Horario ="Mañana";
+									if(b==1) {
+										Horario="Tarde";
 									}
+									/*int movie=-1;
+									for(int y=0;y<totalmovies;y++) {
+										if(horario[y][a][b]==true) {
+											movie=y;
+											break;
+										}
+									}*/
+									String alfabeto="ABCDEFGHIJ";
+									String[] partes = alfabeto.split("");
+									System.out.println(contador+")"+pelicula[x]+" - Sala:"+(a+1)+" - Horario de la "+Horario+" - En el Asiento "+partes[c]+d);
+									contador++;
 								}
-								String alfabeto="ABCDEFGHIJ";
-								String[] partes = alfabeto.split("");
-								System.out.println(contador+")"+pelicula[movie]+" - Sala:"+(a+1)+" - Horario de la "+Horario+" - En el Asiento "+partes[c]+d);
 							}
 						}
 					}
 				}
 			}
+			
 		}
 		catch (Exception e) {
 			System.out.println("ERROR USUARIO NO VALIDO PARA LECTURA");
@@ -378,9 +658,63 @@ public class Taller0 {
 	}
 	
 	public static void ADMIN() {
+		boolean valido = true;
+		while(valido) {
+			@SuppressWarnings("resource")
+			var sc= new Scanner(System.in);
+			System.out.println("1)Taquilla");
+			System.out.println("2)Informacion cliente");
+			System.out.println("0)Salir");
+			String respuesta = sc.nextLine();
+			if(respuesta.equals("1")) {
+				taquilla();
+			}
+			else if(respuesta.equals("2")) {
+				info();		
+			}
+			else if(respuesta.equals("0")) {
+				valido = false;
+				System.out.println("Saliendo de menu ADMIN");
+			}
+			else {
+				System.out.println("ERROR RESPUESTA NO VALIDA");
+			}
+		}
 	}
 	
 	public static void taquilla() {
+		System.out.print("CARTELERA");
+		for(int a=0;a<99;a++) {
+			System.out.println("-"+pelicula[a][0]);
+			for(int b=0;b<3;b++) {
+				for(int c=0;c<2;c++) {
+					int saldototal=0;
+					for(int d=0;d<10;d++) {
+						for(int e=0;e<30;e++) {
+							int costo =0;
+							if(sala[a][b][c][d][e]>=0) {
+								if(pelicula[a][1].equals("estreno")) {
+									costo=5500;
+								}
+								else {
+									costo=4000;
+								}
+								if(usuario[sala[a][b][c][d][e]][4].equals("HABILITADO")) {
+									costo=(int) (costo*0.85);
+								}
+							}	
+							saldototal+=costo;
+						}
+					}
+					String Horario ="Mañana";
+					if(c==1) {
+						Horario="Tarde";
+					}
+					System.out.println("--- Sala:"+(b+1)+" - Horario de la "+Horario+" se recaudo un total  de $"+ saldototal);
+				}
+			}
+			System.out.println("- Saldo Recaudado total"+recaudacion[a]);
+		}
 	}
 	
 	public static void info() {
@@ -411,7 +745,7 @@ public class Taller0 {
 			BufferedWriter wr = new BufferedWriter(text);
 			int contador=0;
 			while(contador<totalusuario) {
-				wr.write(usuario[contador][0]+","+usuario[contador][1]+","+usuario[contador][2]+","+saldo[contador]+"\n");
+				wr.write(usuario[contador][0]+","+usuario[contador][1]+","+usuario[contador][2]+","+usuario[contador][3]+","+saldo[contador]+"\n");
 				contador++;
 			}
 			wr.close();
@@ -445,7 +779,7 @@ public class Taller0 {
 			BufferedWriter wr = new BufferedWriter(text);
 			int contador=0;
 			while(contador<totalmovies) {
-				wr.write(pelicula[contador][0]+","+pelicula[contador][1]+","+recaudacion[contador]+"\n");
+				wr.write(pelicula[contador][0]+","+pelicula[contador][1]+","+recaudacion[contador]);
 				for(int a=0;a<3;a++) {
 					for(int b=0;b<2;b++) {
 						if(horario[contador][a][b]) {
@@ -453,7 +787,7 @@ public class Taller0 {
 							if(b==1) {
 								Horario="T";
 							}
-							wr.write(","+a+","+Horario);
+							wr.write(","+a+1+","+Horario);
 						}
 					}
 				}
